@@ -38,3 +38,34 @@ while option != 0:
     print()
     mainMenu()
     option = int(input("Enter your option: "))
+
+### Town Menu ###
+
+# Display town menu (need to display this after new/resume game)
+def townMenu():
+    option = int(input("Enter your option: "))
+    while option != 0:
+        if option == 1:
+            print("Day #: You are in a town.")
+            print("1) View Character Stats")
+            print("2) View World Map")
+            print("3) Move")
+            print("4) Rest")
+            print("5) Save Game")
+            print("6) Exit Game")
+        
+        if option == 1:
+            print("Do view character stats")
+        elif option == 2:
+            print("DO VIEW WORLD MAP ")
+        elif option == 3:
+            print("DO MOVE")
+        elif option == 4:
+            print("DO REST")
+        elif option == 5:
+            print("DO SAVE")
+        elif option == 6:
+            print("Exiting game... goodbye!")
+            sys.exit()
+        else:
+            print("Invalid option. Please choose between the three given options.")
