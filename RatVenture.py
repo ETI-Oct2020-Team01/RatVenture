@@ -1,4 +1,3 @@
-  
 #####################
 ##### RatVenture ####
 #####################
@@ -7,6 +6,7 @@
 import sys
 from random import randint
 import time
+import pickle
 
 
 #setting of global variables
@@ -106,9 +106,6 @@ def move(m): #movement based on the user input
         player.locationH = find_event() #find new space event
     display_map()
 
-import sys
-
-
 ### Main Menu ###
 def mainMenu():
     print("------------------------------------")
@@ -172,3 +169,10 @@ def townMenu():
             sys.exit()
         else:
             print("Invalid option. Please choose between the three given options.")
+
+# Load save file
+ #with open('savefile', 'w') as f:
+    #pickle.dump(data, f)
+
+#with open('savefile') as f:
+    #data = pickle.load(f)
