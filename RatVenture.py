@@ -1,9 +1,10 @@
+  
+#####################
+##### RatVenture ####
+#####################
 
-#RatVenture
-#Description: Computer role-playing game(RPG) called RatVenture which is text-based.
-#             Your objective is to defeat the Rat King and save the world!.
-
-#importing of libraries
+### Imports ###
+import sys
 from random import randint
 import time
 
@@ -105,12 +106,6 @@ def move(m): #movement based on the user input
         player.locationH = find_event() #find new space event
     display_map()
 
-=======
-#####################
-##### RatVenture ####
-#####################
-
-### Imports ###
 import sys
 
 
