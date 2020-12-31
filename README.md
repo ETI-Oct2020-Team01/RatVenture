@@ -6,9 +6,9 @@ In this computer role-playing game, you will travel around a grid map searching 
 
 ## Project Members and Roles
 
-1. **Edwin Joseph** (Project Manager) - S10189685C
-2. **Irfan Syahmi** (Developer) - S10189620K
+1. [**Edwin Joseph**](https://github.com/cheatcode131080) (Project Manager) - S10189685C
+2. [**Irfan Syahmi**](https://github.com/irfan-np) (Developer) - S10189620K
 3. [**Nurin Nazurah**](https://github.com/nurinnazurah)  (Developer) - S10189240B
-4. **Shuran Gong** (QA)- S10177280J
+4. [**Shuran Gong**](https://github.com/shur4n) (QA)- S10177280J
 
 Probably less bugs than Cyberpunk 2077
