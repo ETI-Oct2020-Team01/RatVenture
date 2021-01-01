@@ -54,6 +54,14 @@ class Rat(object):
 
 rat = Rat()
 
+# rest feature
+def rest():
+    player.hp = 20
+    player.day += 1
+    print('\nYou are fully healed.')
+
+    return player.hp, player.day
+
 # Function to view hero's stats
 def herostats():
     #stats = player.name + "\nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.damage, player.defence, player.hp, player.day)
@@ -220,9 +228,7 @@ while True:
                         print('\n')
                     
                     elif choice == 4: # rest
-                        player.hp = 20
-                        player.day += 1
-                        print('\nYou are fully healed.')
+                        rest()
                     
                     #elif choice == 5: #save file 
 
