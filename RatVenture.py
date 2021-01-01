@@ -22,6 +22,7 @@ world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],\
              [' ', ' ', ' ', ' ', 'T', ' ', ' ', ' '],\
              [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'K']]
 
+# Hero's stats
 class Player:
     #the player will start off with these stats
     def __init__(self):
@@ -43,6 +44,27 @@ class Player:
         return self.hp > 0
 
 player = Player()
+
+
+# Rat's stats
+class Rat(object): 
+    def __init__(self):
+        self.name = 'Rat'
+        self.damage = '1 to 3'
+        self.damage_min = 1 
+        self.damage_max = 3
+        self.defence = 1
+        self.hp = 10 
+        #self.location = '?'
+    
+rat = Rat()
+
+def herostats():
+    #stats = player.name + "\nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.damage, player.defence, player.hp, player.day)
+    stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.name, player.damage, player.defence, player.hp, player.day)
+    print(stats)
+    return stats
+
 
 ### Show Menu ###
 # Display the all of the menu function
@@ -177,11 +199,12 @@ while True:
 # if player is in town
                 if player.locationH == 'Town':
                     print('\nDay {}: You are in Town'.format(player.day))
+                    print("=======================")
                     show_menu('town')
-                    choice = int(input('Enter your option: '))
+                    choice = int(input('Enter your option: \n'))
 
                     if choice == 1: #view the player stats
-                        #herostats()
+                        herostats()
                         print()
 
                     elif choice == 2: # view the world map
