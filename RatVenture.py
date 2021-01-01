@@ -200,7 +200,7 @@ while True:
                     print('\nDay {}: You are in Town'.format(player.day))
                     print("=======================")
                     show_menu('town')
-                    choice = int(input('Enter your option: \n'))
+                    choice = int(input('Enter your option:'))
 
                     if choice == 1: #view the player stats
                         herostats()
