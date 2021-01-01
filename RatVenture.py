@@ -28,15 +28,12 @@ class Player:
     def __init__(self):
         self.name = 'The Hero'
         self.damage = '2 to 4'
-        self.minDamage = '2'
-        self.maxDamage = '4'
-        self.defence = '1'
+        self.minDamage = 2
+        self.maxDamage = 4
+        self.defence = 1
         self.hp = 20
         self.day = 1
-        #self.positionX = 0
-       #self.positionY = 0
         self.position = [0,0]
-        #self.location = 'You are in a Town'
         self.locationH = 'Town'
         self.event = ['Town', 'Outside', 'Encounter', 'Combat']
 
@@ -44,7 +41,6 @@ class Player:
         return self.hp > 0
 
 player = Player()
-
 
 # Rat's stats
 class Rat(object): 
@@ -55,16 +51,21 @@ class Rat(object):
         self.maxDamage = 3
         self.defence = 1
         self.hp = 10 
-        #self.location = '?'
-    
+
 rat = Rat()
 
+# Function to view hero's stats
 def herostats():
     #stats = player.name + "\nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.damage, player.defence, player.hp, player.day)
     stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.name, player.damage, player.defence, player.hp, player.day)
     print(stats)
     return stats
 
+# Function to view rat's stats
+def ratstats():
+    stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}".format(rat.name, rat.damage, rat.defence, rat.hp)
+    print(stats)
+    return stats
 
 ### Show Menu ###
 # Display the all of the menu function
@@ -234,7 +235,6 @@ while True:
 # if the player is outside 
                 if player.event == 'Outside':
                     print('Day {}: You are out in the open.'.format(player.day))
-                    #rat
                     
 
                     #mob = rat.Rat()[randint(0,len(rat.Rat)-1)]
@@ -243,9 +243,9 @@ while True:
 
 # if the player is in an encounter 
                 if player.event == 'Encounter':
-                    #rat.Rat()
+                    ratstats()
                     show_menu('fight')
-                    choice = int(input('Enter choice: '))
+                    choice = int(input('Enter your choice: '))
                     if choice == 1: #if the player, chooses to fight the mob
                         player.event = 'Combat' #change player event to combat 
                     elif choice == 2: #if the player, chooses to run away
@@ -297,7 +297,7 @@ while True:
                     show_menu('open') 
                     option = int(input('Enter your choice: '))
 
-                    if option == 1:
+                    if option == 1: 
                         if rat.hp <= 0:
                             herostats()
                         else:
