@@ -51,8 +51,8 @@ class Rat(object):
     def __init__(self):
         self.name = 'Rat'
         self.damage = '1 to 3'
-        self.damage_min = 1 
-        self.damage_max = 3
+        self.minDamage = 1 
+        self.maxDamage = 3
         self.defence = 1
         self.hp = 10 
         #self.location = '?'
@@ -191,7 +191,9 @@ while True:
             print()
 
         if option == 3: #exit game
-            sys.exit()
+            #sys.exit()
+            break
+            
 
 # start of the game        
         while game_over == False:
@@ -201,11 +203,11 @@ while True:
                     print('\nDay {}: You are in Town'.format(player.day))
                     print("=======================")
                     show_menu('town')
-                    choice = int(input('Enter your option: \n'))
+                    choice = int(input('Enter your option: '))
+                    print('\n')
 
                     if choice == 1: #view the player stats
                         herostats()
-                        print()
 
                     elif choice == 2: # view the world map
                         display_map()
@@ -214,6 +216,7 @@ while True:
                         display_map()
                         print('W = up; A = left; S = down; D = right')
                         move(input('Your move: '))
+                        print('\n')
                     
                     elif choice == 4: # rest
                         player.hp = 20
@@ -231,7 +234,7 @@ while True:
 # if the player is outside 
                 if player.event == 'Outside':
                     print('Day {}: You are out in the open.'.format(player.day))
-                    #rat.Rat()
+                    #rat
                     
 
                     #mob = rat.Rat()[randint(0,len(rat.Rat)-1)]
@@ -244,7 +247,7 @@ while True:
                     show_menu('fight')
                     choice = int(input('Enter choice: '))
                     if choice == 1: #if the player, chooses to fight the mob
-                        player.event = 'Combat' #change player event to combat
+                        player.event = 'Combat' #change player event to combat 
                     elif choice == 2: #if the player, chooses to run away
                         player.event = 'Ran' #change player event to ran
                     else:
@@ -252,8 +255,8 @@ while True:
 
 #if player is in combat
                 if player.event == 'Combat':
-                    damage_dealt = (randint(player.minDamage, player.maxDamage)) #"""mob['Defence']"""
-                    damage_taken = player.defence #"""randint(mob['Min Damage'], mob['Max Damage'])"""
+                    damage_dealt = (randint(player.minDamage, player.maxDamage)) - rat.defence
+                    damage_taken = randint(rat.minDamage, rat.maxDamage) - player.defence 
 
                     if damage_dealt <= 0: #if the damage is in negative range, set to 0
                         damage_dealt = 0
@@ -261,10 +264,67 @@ while True:
                     #print('\nYou do not have the Orb of Power - the Rat King is immune!')
                     # damage_dealt = 0
 
+                    rat.hp -= damage_dealt #player deals the damage first to rat
+                    print('\nYou deal {} damage to the Rat'.format(damage_dealt))
+                    if rat.hp <= 0: # the rat has died
+                        print('The Rat is dead! You are victorious!')
+                    
+                    else: #otherwise the player will receive damage from the rat
+                        if damage_taken <= 0:
+                            damage_taken = 0
+                        
+                        print('Ouch! The Rat has hit you for {} damage!'.format(damage_taken))
+                        player.hp -= damage_taken
+                        if player.hp <=0:
+                            player.hp = 0
+                        
+                        print('You have {} HP left.'.format(player.hp))
+                        if player.hp == 0:
+                            print('You died! Game Over.')
+                            game_over = True
+                        else:
+                            player.event = 'Encounter'
+
+#if player ran away
+                if player.event == 'Ran':
+                    print('\nYou run and hide.')
+                    rat.hp #resorts enemy mob health
+                    player.event = 'Open' #change to player event open
+
+#if player is in open
+                if player.event == 'Open':
+                    print('Day {}: You are out in the open.'.format(player.day))
+                    show_menu('open') 
+                    option = int(input('Enter your choice: '))
+
+                    if option == 1:
+                        if rat.hp <= 0:
+                            herostats()
+                        else:
+                            player.event = 'Encounter'
+
+                    elif option == 2: #view map
+                        if rat.hp <= 0: #if the player has killed the mob
+                            display_map()
+                        else: #otherwise, player will go back into encounter event
+                            player.event = 'Encounter'
+                            
+                    elif option == 3: #move
+                        display_map()
+                        print('W = up; A = left; S = down; D = right')
+                        move(input('Your move: '))
+                            
+                    elif option == 4: #exit game
+                        game_over = True
+
+                    else:
+                        print('Invalid Input\n')
+
             except: #if the player has input an invalid input during the game
                 print('Invalid Input\n')
         else: #if game_over == True
-            sys.exit()
+            break
+            
     except: #if the player has input an invalid input during the main menu
         print('Invalid Input\n')
         continue
