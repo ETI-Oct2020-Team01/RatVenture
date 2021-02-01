@@ -356,6 +356,42 @@ def attack(is_rat_alive, Player, Rat):
         exit()
     return player, rat, is_rat_alive
 
+# Rat King menu
+def king_combat_menu(Player, RatKing):
+    print('Day {}: You see the Rat King!'.format(player.day))
+    rat_king
+    is_king_alive = True #run till king == False
+    while True:
+        print('Encounter! - Rat King')
+        ratkingstats()
+        fight_text = ["Attack", "Run"]
+        for i in range(len(fight_text)):# show fight or run
+            print('{}) {}'.format(i + 1, fight_text[i]))
+        print()
+        try:
+            option = int(input('Enter choice: '))
+            if option == 1:
+                if player.checklist == True:
+                    Player, RatKing, is_king_alive = king_attack(player, rat_king, is_king_alive)
+                    if is_king_alive == False:
+                        print('The Rat King is dead! You are victorious!')
+                        print('Congratulations! You have defeated the Rat King!')
+                        print('The world is saved, you WIN!!')
+                        break
+                    else:
+                        pass
+                else:
+                    failure_attack(Player)
+            elif option == 2:
+                run()
+                break
+            else:
+                print('Invalid choice!')
+                print()
+        except ValueError: 
+            print('Invalid option. Enter only integers!')
+            print()
+    return 
 
 ## Start of the program ##
 Player = main_menu(player)
@@ -365,6 +401,7 @@ while player.locationH != 'Rat King':
     elif player.locationH == 'Rat':#fight rat then can see town
         coward = combat_menu(player.day, rat)
         player = outdoor_menu(player, coward)
+king_combat_menu(player, rat_king)
 
  
 
