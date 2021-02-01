@@ -83,6 +83,89 @@ def ratkingstats():
     print(stats)
     return stats
 
+# To display the world map
+def display_map():
+    for row in range(len(world_map)): #the y axis of the world map
+        print('+---+---+---+---+---+---+---+---+')
+        print('|',end='')
+        for col in range(len(world_map[row])): #the x axis of the world map
+            if player.position == [row, col]:
+                 #if the player is on the space to replace the letter with the player's letter 'H'
+                if world_map[row][col] == ' ':
+                    world_map[row][col] = 'H'
+                if world_map[row][col] == 'T':
+                    world_map[row][col] = 'H/T'
+                if world_map[row][col] == 'K':
+                    world_map[row][col] = 'H/K'
+            else: #else to replace it back to the default letter
+                if world_map[row][col] == 'H':
+                    world_map[row][col] = ' '
+                if world_map[row][col] == 'H/T':
+                    world_map[row][col] = 'T'
+                if world_map[row][col] == 'H/K':
+                    world_map[row][col] = 'K'
+            print('{:^3}|'.format(world_map[row][col]), end='')
+        print()
+    print('+---+---+---+---+---+---+---+---+')
+
+
+
+# Exit the game
+def exit_game():
+    exit()
+    return
+
+# Run
+def run():
+    print('You run and hide')
+    coward = True
+    return coward
+
+# Find event based on players position
+def find_event():
+    event = ''
+    for row in range(len(world_map)):
+        for col in range(len(world_map[row])):
+            if player.position == [row, col]:
+                if world_map[row][col] == ' ': #if the space is empty, player is outside
+                    event = 'Rat'
+                if world_map[row][col] == 'T': #if the space is a town, player is in a town
+                    event = 'Town'
+                if world_map[row][col] == 'K': #if the space is a rat king, player encounters rat king
+                    event = 'Rat King'
+    return event
+
+# Movement based on the user input
+def move(m):
+    prev_positionY, prev_positionX = player.position[0], player.position[1]
+
+    if m.upper() == 'W':
+       player.position[0] -= 1
+    elif m.upper() == 'A':
+       player.position[1] -= 1
+    elif m.upper() == 'S':
+       player.position[0] += 1
+    elif m.upper() == 'D':
+       player.position[1] += 1
+    else:
+       print('Invalid Input')
+    for i in player.position: #if player tries to move out of the map, it will be an invalid move.
+        if i < 0 or i > len(world_map)-1:
+            player.position[0], player.position[1] =  prev_positionY, prev_positionX
+            print('You cannot move there')
+    
+    if [prev_positionY, prev_positionX] != player.position: #if the player has moved to a new space
+        player.day += 1
+        player.locationH = find_event() #find new space event
+    display_map()
+
+# Rest
+def rest():
+    player.hp = 20
+    player.day += 1
+    print('You are fully healed.')#healing process
+    return player.day
+
 
 ## Main menu ###
 def main_menu(Player):
@@ -121,11 +204,6 @@ def main_menu(Player):
                 print()
                 continue
     return Player
-
-# Exit the game
-def exit_game():
-    exit()
-    return
 
 ## Town Menu ##
 def town_menu(Player):
@@ -172,75 +250,47 @@ def town_menu(Player):
             print()
     return player
 
-# To display the world map
-def display_map():
-    for row in range(len(world_map)): #the y axis of the world map
-        print('+---+---+---+---+---+---+---+---+')
-        print('|',end='')
-        for col in range(len(world_map[row])): #the x axis of the world map
-            if player.position == [row, col]:
-                 #if the player is on the space to replace the letter with the player's letter 'H'
-                if world_map[row][col] == ' ':
-                    world_map[row][col] = 'H'
-                if world_map[row][col] == 'T':
-                    world_map[row][col] = 'H/T'
-                if world_map[row][col] == 'K':
-                    world_map[row][col] = 'H/K'
-            else: #else to replace it back to the default letter
-                if world_map[row][col] == 'H':
-                    world_map[row][col] = ' '
-                if world_map[row][col] == 'H/T':
-                    world_map[row][col] = 'T'
-                if world_map[row][col] == 'H/K':
-                    world_map[row][col] = 'K'
-            print('{:^3}|'.format(world_map[row][col]), end='')
+# Outdoor menu
+def outdoor_menu(Player, coward):
+    open_text = ["View Character", "View Map", "Move", "Sense Orb", "Exit Game"]
+    while True:
         print()
-    print('+---+---+---+---+---+---+---+---+')
-
-# Find event based on players position
-def find_event():
-    event = ''
-    for row in range(len(world_map)):
-        for col in range(len(world_map[row])):
-            if player.position == [row, col]:
-                if world_map[row][col] == ' ': #if the space is empty, player is outside
-                    event = 'Rat'
-                if world_map[row][col] == 'T': #if the space is a town, player is in a town
-                    event = 'Town'
-                if world_map[row][col] == 'K': #if the space is a rat king, player encounters rat king
-                    event = 'Rat King'
-    return event
-
-# Movement based on the user input
-def move(m):
-    prev_positionY, prev_positionX = player.position[0], player.position[1]
-
-    if m.upper() == 'W':
-       player.position[0] -= 1
-    elif m.upper() == 'A':
-       player.position[1] -= 1
-    elif m.upper() == 'S':
-       player.position[0] += 1
-    elif m.upper() == 'D':
-       player.position[1] += 1
-    else:
-       print('Invalid Input')
-    for i in player.position: #if player tries to move out of the map, it will be an invalid move.
-        if i < 0 or i > len(world_map)-1:
-            player.position[0], player.position[1] =  prev_positionY, prev_positionX
-            print('You cannot move there')
-    
-    if [prev_positionY, prev_positionX] != player.position: #if the player has moved to a new space
-        player.day += 1
-        player.locationH = find_event() #find new space event
-    display_map()
-
-# Rest
-def rest():
-    player.hp = 20
-    player.day += 1
-    print('You are fully healed.')#healing process
-    return player.day
+        for i in range(len(open_text)):
+            print('{}) {}'.format(i + 1, open_text[i]))
+        try:
+            option = int(input('Enter your choice: '))
+        except ValueError:
+            print('Invalid option. Enter only integers!')
+            print()
+            continue
+        if option == 1:
+            herostats()
+            continue
+        elif option == 2:
+            display_map()
+            print()
+            continue
+        elif option == 3:
+            display_map()
+            print('W = up; A = left; S = down; D = right')
+            move(input('Your move: '))
+            break
+        elif option == 4:
+            if coward == True: #cant get orb till you kill rat
+                coward = combat_menu(Player, Rat)
+            else:
+                print()
+                #sense_orb()
+                
+            continue
+        elif option == 5:
+            exit_game() #exit game
+            break
+        else:
+            print('Invalid choice')
+            print()
+            continue  
+    return player
 
 # Combat Menu
 def combat_menu(Player, Rat):
@@ -305,54 +355,6 @@ def attack(is_rat_alive, Player, Rat):
         print('--------------------')
         exit()
     return player, rat, is_rat_alive
-
-# Run
-def run():
-    print('You run and hide')
-    coward = True
-    return coward
-
-# Outdoor menu
-def outdoor_menu(Player, coward):
-    open_text = ["View Character", "View Map", "Move", "Sense Orb", "Exit Game"]
-    while True:
-        print()
-        for i in range(len(open_text)):
-            print('{}) {}'.format(i + 1, open_text[i]))
-        try:
-            option = int(input('Enter your choice: '))
-        except ValueError:
-            print('Invalid option. Enter only integers!')
-            print()
-            continue
-        if option == 1:
-            herostats()
-            continue
-        elif option == 2:
-            display_map()
-            print()
-            continue
-        elif option == 3:
-            display_map()
-            print('W = up; A = left; S = down; D = right')
-            move(input('Your move: '))
-            break
-        elif option == 4:
-            if coward == True: #cant get orb till you kill rat
-                coward = combat_menu(Player, Rat)
-            else:
-                print()
-                sense_orb()
-                
-            continue
-        elif option == 5:
-            exit_game() #exit game
-            break
-        else:
-            print('Invalid choice')
-            print()
-            continue  
-    return player
 
 
 ## Start of the program ##
