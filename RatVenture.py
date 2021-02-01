@@ -3,16 +3,15 @@
 #####################
 
 ### Imports ###
-import sys
 from random import randint
 import time
 import pickle
+import sys
 
-
-#setting of global variables
+# global variable
 global world_map
 
-#Default world map
+# Default world map
 world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],\
              [' ', ' ', ' ', 'T', ' ', ' ', ' ', ' '],\
              [' ', ' ', ' ', ' ', ' ', 'T', ' ', ' '],\
@@ -24,7 +23,7 @@ world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],\
 
 # Hero's stats
 class Player:
-    #the player will start off with these stats
+    # the player will start with these stats
     def __init__(self):
         self.name = 'The Hero'
         self.damage = '2 to 4'
@@ -35,21 +34,33 @@ class Player:
         self.day = 1
         self.position = [0,0]
         self.locationH = 'Town'
-        self.event = ['Town', 'Outside', 'Encounter', 'Combat']
+        self.orb = [0,0]
+        self.checklist = False
 
-    def is_alive(self): 
+    def is_alive(self):
         return self.hp > 0
 
 player = Player()
 
+<<<<<<< HEAD
+=======
+def herostats():
+    stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.name, player.damage, player.defence, player.hp, player.day)
+    print(stats)
+    if player.checklist == True:
+        print('You are holding the Orb of Power')
+    return stats
+
+>>>>>>> origin/nazurah
 # Rat's stats
-class Rat(object): 
+class Rat(object):
     def __init__(self):
         self.name = 'Rat'
-        self.damage = '1 to 3'
-        self.minDamage = 1 
+        self.damage = ' 1 to 3'
+        self.minDamage = 1
         self.maxDamage = 3
         self.defence = 1
+<<<<<<< HEAD
         self.hp = 10 
 
 rat = Rat()
@@ -74,35 +85,49 @@ def ratstats():
     stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}".format(rat.name, rat.damage, rat.defence, rat.hp)
     print(stats)
     return stats
+=======
+        self.hp = 10
 
-### Show Menu ###
-# Display the all of the menu function
-def show_menu(menu):
-    menu_list = {'main': ('New Game','Resume Game','Exit Game'),
-                 'town': ('View Character','View Map','Move','Rest','Save Game', 'Exit Game'),
-                 'fight': ('Attack','Run'),
-                 'open': ('View Character','View Map','Move','Exit Game')}
-    menu_text = menu_list[menu]
-    for option in range(len(menu_text)): #for printing of the menu
-        print('{}) {}'.format(option+1, menu_text[option]))
+rat = Rat()
 
-def display_map(): #to display the world map
-    for row in range(len(world_map)):
-        #this is for the y axis of the map
+def ratstats():
+    stats = "\nDamage: {}\nDefence: {}\nHP: {}".format(rat.damage, rat.defence, rat.hp)
+    print(stats)
+    return stats
+
+# Rat King's stats
+class RatKing(object):
+    def __init__(self):
+        self.name = 'Rat King'
+        self.damage = ' 8 to 12'
+        self.minDamage = 8
+        self.maxDamage = 12
+        self.defence = 5
+        self.hp = 25
+>>>>>>> origin/nazurah
+
+rat_king = RatKing()
+
+def ratkingstats():
+    stats = "\nDamage: {}\nDefence: {}\nHP: {}".format(rat_king.damage, rat_king.defence, rat_king.hp)
+    print(stats)
+    return stats
+
+# To display the world map
+def display_map():
+    for row in range(len(world_map)): #the y axis of the world map
         print('+---+---+---+---+---+---+---+---+')
         print('|',end='')
-        for col in range(len(world_map[row])):
-            #this is for the x axis of the map
+        for col in range(len(world_map[row])): #the x axis of the world map
             if player.position == [row, col]:
-                #if the player is on the space to replace the letter with the player's letter 'H'
+                 #if the player is on the space to replace the letter with the player's letter 'H'
                 if world_map[row][col] == ' ':
                     world_map[row][col] = 'H'
                 if world_map[row][col] == 'T':
                     world_map[row][col] = 'H/T'
                 if world_map[row][col] == 'K':
                     world_map[row][col] = 'H/K'
-            else:
-                #else to replace it back to the default letter
+            else: #else to replace it back to the default letter
                 if world_map[row][col] == 'H':
                     world_map[row][col] = ' '
                 if world_map[row][col] == 'H/T':
@@ -113,21 +138,35 @@ def display_map(): #to display the world map
         print()
     print('+---+---+---+---+---+---+---+---+')
 
-def find_event(): #finding the event based on players position
+
+
+# Exit the game
+def exit_game():
+    exit()
+    return
+
+# Run
+def run():
+    print('You run and hide')
+    coward = True
+    return coward
+
+# Find event based on players position
+def find_event():
     event = ''
     for row in range(len(world_map)):
         for col in range(len(world_map[row])):
             if player.position == [row, col]:
                 if world_map[row][col] == ' ': #if the space is empty, player is outside
-                    event = 'Outside'
+                    event = 'Rat'
                 if world_map[row][col] == 'T': #if the space is a town, player is in a town
                     event = 'Town'
                 if world_map[row][col] == 'K': #if the space is a rat king, player encounters rat king
                     event = 'Rat King'
     return event
 
-def move(m): #movement based on the user input
-   #positionX, positionY = positionX[0], positionY[1]
+# Movement based on the user input
+def move(m):
     prev_positionY, prev_positionX = player.position[0], player.position[1]
 
     if m.upper() == 'W':
@@ -147,61 +186,126 @@ def move(m): #movement based on the user input
     
     if [prev_positionY, prev_positionX] != player.position: #if the player has moved to a new space
         player.day += 1
-        player.event = find_event() #find new space event
+        player.locationH = find_event() #find new space event
     display_map()
 
-    
+# Rest
+def rest():
+    player.hp = 20
+    player.day += 1
+    print('You are fully healed.')#healing process
+    return player.day
 
-def generate(item): #generation of town
-    possible = []
 
-    if item == 'Town': #if parameter is 'Town', generate towns
-        for row in range(len(world_map)): #removing existing towns from default map
-            for col in range(len(world_map[row])):
-                if world_map[row][col] == 'T':
-                    world_map[row][col] = ' '
-                    
-        possible.append([0,0]) #fixed default starting town
-        count = 0
-        while len(possible) < 5: #run through this algorithm until there are 5 coordinates
-            y, x = randint(0,len(world_map)-1), randint(0,len(world_map)-1) #generate random new combinations
-            if world_map[y][x] == ' ': #if the space is empty, this excludes spaces where there are towns or kings
-                for i in possible:
-                    if (i[0] - y)**2 + (i[1] - x)**2 > 4: #formula to distance town from one another
-                        count += 1
-            if count == len(possible):
-                if [y,x] not in possible: #if the new combination are not the same as in the possible list
-                    possible.append([y,x]) #append valid coordinates into possible list
-                    count = 0
-            else: #if there are no more possible combinations reset
-                count = 0
-                possible = [[0,0]]
-        return possible #return valid town coordinates           
-
-### Start of the program ###
-print("------------------------------------")
-print("⚔ Welcome adventurer, to RatVenture!")
-print("------------------------------------")
-while True:
-    try:
-        show_menu('main') #start the program with the main menu
-        option = int(input('Enter your option: '))
-
-    
-        if option == 1: #new game
-            town_location = generate('Town') # get a new generated town coordinates in a list
-            for t in town_location: #assigning of new towns in a map
-                world_map[t[0]][t[1]] = 'T'  
-            
-            #player = Player()
-            game_over = False
-
-        if option == 2: #resume game
+## Main menu ###
+def main_menu(Player):
+    main_text = ["New Game",\
+                "Resume Game",\
+                "Exit Game"
+                ]
+    print("------------------------------------")
+    print("⚔ Welcome adventurer, to RatVenture!")
+    print("------------------------------------")
+    while True:
+        for i in range(len(main_text)):
+            print('{}) {}'.format(i + 1, main_text[i])) #print main menu
+        try:
+            option = int(input('Enter your choice: '))#check for user choice below
             print()
+            if option == 1:#new game
+                
+                #player.orb = generate('Orb')
+                break
+            elif option == 2:
+                try:
+                    print()
+                    #hero, day_counter, checklist, coordinates, town_coordinates, orb = resume_game()
+                    break
+                except:
+                    print('File not found, please choose new game')
+            elif option == 3:
+                exit_game()
+            else:
+                print('Invalid choice')
+                print()
+                continue
+        except ValueError: #if user enters string
+                print('Invalid option. Enter only integers!')
+                print()
+                continue
+    return Player
 
-        if option == 3: #exit game
-            #sys.exit()
+## Town Menu ##
+def town_menu(Player):
+    town_text = ["View Character", "View Map", "Move", "Rest", "Save Game", "Exit Game"]
+    print('Day {}: You are in a {}.'.format(player.day, player.locationH))
+    while True:#keep looping till user input is accepted
+        #show town text
+        for i in range(len(town_text)):
+            print('{}) {}'.format(i + 1, town_text[i]))
+        try:
+            option = int(input('Enter your choice: '))
+            #check user input for town text
+            if option == 1:
+                herostats()
+                continue
+            elif option == 2:
+                display_map()
+                print()
+                continue
+            elif option == 3:
+                display_map()
+                print('W = up; A = left; S = down; D = right')
+                move(input('Your move: '))#map movement map
+                print('\n')
+                break
+            elif option == 4:
+                #regenerate health
+                print('\n')
+                Player = rest()
+                break
+            elif option == 5:
+                print()
+                #save hero stats and location to file
+                #save_game(hero, day_counter, checklist, coordinates, town_coordinates)
+                continue
+            elif option == 6:
+                exit_game()
+                break
+            else:
+                print('Invalid choice')
+                print()
+        except ValueError: #if user inputs string
+            print('Invalid option. Enter only integers!')
+            print()
+    return player
+
+# Outdoor menu
+def outdoor_menu(Player, coward):
+    open_text = ["View Character", "View Map", "Move", "Sense Orb", "Exit Game"]
+    while True:
+        print()
+        for i in range(len(open_text)):
+            print('{}) {}'.format(i + 1, open_text[i]))
+        try:
+            option = int(input('Enter your choice: '))
+        except ValueError:
+            print('Invalid option. Enter only integers!')
+            print()
+            continue
+        if option == 1:
+            herostats()
+            continue
+        elif option == 2:
+            display_map()
+            print()
+            continue
+        elif option == 3:
+            display_map()
+            print('W = up; A = left; S = down; D = right')
+            move(input('Your move: '))
             break
+<<<<<<< HEAD
             
 
 # start of the game        
@@ -329,11 +433,98 @@ while True:
             except: #if the player has input an invalid input during the game
                 print('Invalid Input\n')
         else: #if game_over == True
+=======
+        elif option == 4:
+            if coward == True: #cant get orb till you kill rat
+                coward = combat_menu(Player, Rat)
+            else:
+                print()
+                #sense_orb()
+                
+            continue
+        elif option == 5:
+            exit_game() #exit game
+>>>>>>> origin/nazurah
             break
-            
-    except: #if the player has input an invalid input during the main menu
-        print('Invalid Input\n')
-        continue
+        else:
+            print('Invalid choice')
+            print()
+            continue  
+    return player
+
+# Combat Menu
+def combat_menu(Player, Rat):
+    coward = False
+    print('Day {}: You are in the open.'.format(player.day))
+    is_rat_alive = True#loop till input accepted
+    while True:
+        print('Encounter! - Rat')
+        ratstats()
+        fight_text = ["Attack", "Run"]
+        for i in range(len(fight_text)):#fight text
+            print('{}) {}'.format(i + 1, fight_text[i]))
+        try:
+            option = int(input('Enter your choice: '))
+            if option == 1:
+                Player, Rat, is_rat_alive = attack(is_rat_alive, player, rat)#fight rat
+                if is_rat_alive == True:#rat alive
+                    pass
+                else:
+                    print('The Rat is dead! You are victorious!')
+                    break
+            elif option == 2:
+                coward = run() #rrun away from rat
+                break
+            else:
+                print('Number entered is out of range')
+                print()
+        except ValueError:
+            print('Invalid option. Enter only integers!')
+            print()
+        print()
+    return coward
+
+# Attack rat
+def attack(is_rat_alive, Player, Rat):
+    if player.checklist == True:#orb is obtained
+        player.damage = randint(7, 9) 
+        player.damage -= 1
+    elif player.checklist == False:#no orb
+        player.damage = randint(2, 4)
+        player.damage -= 1
+    rat.hp -= player.damage 
+    rat.damage = randint(1, 3) #damage to rat
+    print('You dealt {} damage to the Rat'.format(player.damage))
+    if rat.hp < 1:
+        is_rat_alive = False # rat survived
+        return player, rat, is_rat_alive
+    elif rat.hp > 1:
+        if player.checklist == True:# have orb damage taken
+            rat.damage -= 6
+            if rat.damage <= 0:
+                rat.damage = 0
+        else: #no orb damage taken
+            rat.damage -= 1
+        player.hp -= rat.damage
+        print('Ouch! the Rat hit you for {} damage!'.format(rat.damage))#damage taken
+        print('You have {} HP left.'.format(player.hp))#hp left
+    if player.hp < 1:# player die
+        print('--------------------')
+        print('{:^20s}'.format('YOU DIED!'))
+        print('{:^20s}'.format('GAME OVER!'))
+        print('--------------------')
+        exit()
+    return player, rat, is_rat_alive
+
+
+## Start of the program ##
+Player = main_menu(player)
+while player.locationH != 'Rat King':
+    if player.locationH == 'Town':
+        Player = town_menu(player.day)
+    elif player.locationH == 'Rat':#fight rat then can see town
+        coward = combat_menu(player.day, rat)
+        player = outdoor_menu(player, coward)
 
  
 
