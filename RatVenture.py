@@ -189,7 +189,7 @@ def main_menu(Player):
             elif option == 2:
                 try:
                     print()
-                    #hero, day_counter, checklist, coordinates, town_coordinates, orb = resume_game()
+                    #player = resume_game()
                     break
                 except:
                     print('File not found, please choose new game')
@@ -392,6 +392,28 @@ def king_combat_menu(Player, RatKing):
             print('Invalid option. Enter only integers!')
             print()
     return 
+
+#successful attack
+def king_attack(Player, rat_king, is_king_alive):#orb attack
+    player.damage = randint(7, 9) #randomise damage
+    player.damage -= 5
+    rat_king.hp -= player.damage 
+    rat_king.damage = randint(6,10) #randomise damage
+    print('You dealt {} damage to the Rat King'.format(player.damage))
+    rat_king.damage -= 6
+    player.hp -= rat_king.damage
+    if player.hp < 1: #no health and died
+        print('--------------------')
+        print('{:^20s}'.format('You died!'))
+        print('{:^20s}'.format('GAME OVER!'))
+        print('--------------------')
+        exit()
+    elif rat_king.hp < 1: #rat king died
+        is_king_alive = False
+    else:#normal combat report
+        print('Ouch! the Rat King hit you for {} damage!'.format(rat_king.damage))
+        print('You have {} HP left.'.format(player.hp))
+    return Player, rat_king, is_king_alive
 
 ## Start of the program ##
 Player = main_menu(player)
