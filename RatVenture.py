@@ -415,6 +415,16 @@ def king_attack(Player, rat_king, is_king_alive):#orb attack
         print('You have {} HP left.'.format(player.hp))
     return Player, rat_king, is_king_alive
 
+#attack withou an orb
+def failure_attack(Player):#no orb attack sure die
+    print('You do not have the Orb of Power - the Rat King is immune!')
+    print('You deal 0 damage to the Rat King')
+    king_damage = randint(6, 10)#randomise damage
+    print('Ouch! The Rat King hit you for {} damage!'.format(king_damage))
+    player.hp -= king_damage
+    print('You have {} HP left.'.format(player.hp))#normal attack report
+    return player
+
 ## Start of the program ##
 Player = main_menu(player)
 while player.locationH != 'Rat King':
