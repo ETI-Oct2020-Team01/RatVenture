@@ -4,7 +4,6 @@ import pytest
 import random
 from RatVenture import *
 
-player = Player()
 
 def test_MainMenu(monkeypatch):
     """
@@ -14,7 +13,7 @@ def test_MainMenu(monkeypatch):
     """
     
     monkeypatch.setattr("builtins.input", lambda _: 1)  
-    value = main_menu(player)
+    value = main_menu(Player)
     assert value == 1
 
 def test_MainMenu_over(monkeypatch):
@@ -23,7 +22,7 @@ def test_MainMenu_over(monkeypatch):
     Output: Invalid choice
     """
     monkeypatch.setattr("builtins.input", lambda _: 6)  
-    value = main_menu(player)
+    value = main_menu(Player)
     assert value == "Invalid choice"
 
 def test_MainMenu_invalid(monkeypatch):
@@ -32,7 +31,7 @@ def test_MainMenu_invalid(monkeypatch):
     Output: Invalid option. Enter only integers!
     """
     monkeypatch.setattr("builtins.input", lambda _: 9)
-    value = main_menu(player)
+    value = main_menu(Player)
     assert value == "Invalid option. Enter only integers!"
 
 def test_rest_function():
