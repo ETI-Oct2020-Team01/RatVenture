@@ -7,6 +7,7 @@ from random import randint
 import time
 import pickle
 import sys
+import random
 
 # global variable
 global world_map
@@ -372,7 +373,7 @@ def king_combat_menu(Player, RatKing):
             option = int(input('Enter choice: '))
             if option == 1:
                 if player.checklist == True:
-                    Player, RatKing, is_king_alive = king_attack(player, rat_king, is_king_alive)
+                    king_attack()
                     if is_king_alive == False:
                         print('The Rat King is dead! You are victorious!')
                         print('Congratulations! You have defeated the Rat King!')
@@ -394,26 +395,40 @@ def king_combat_menu(Player, RatKing):
     return 
 
 #successful attack
-def king_attack(Player, rat_king, is_king_alive):#orb attack
-    player.damage = randint(7, 9) #randomise damage
-    player.damage -= 5
-    rat_king.hp -= player.damage 
-    rat_king.damage = randint(6,10) #randomise damage
-    print('You dealt {} damage to the Rat King'.format(player.damage))
-    rat_king.damage -= 6
-    player.hp -= rat_king.damage
-    if player.hp < 1: #no health and died
-        print('--------------------')
-        print('{:^20s}'.format('You died!'))
-        print('{:^20s}'.format('GAME OVER!'))
-        print('--------------------')
-        exit()
-    elif rat_king.hp < 1: #rat king died
-        is_king_alive = False
-    else:#normal combat report
+def king_attack():#orb attack
+    while rat_king.hp > 0:
+        # player damage calculation
+        playerdamage = random.randint(player.minDamage, player.maxDamage)
+        pdamage = playerdamage - rat_king.defence
+        rat_king.hp = rat_king.hp - pdamage
+
+        # rat king damage calculation
+        ratkingdamage = random.randint(rat_king.minDamage, rat_king.maxDamage)
+        rkdamge = ratkingdamage - player.defence
+        player.hp = player.hp - rkdamge
+
+        print()
+        print('You dealt {} damage to the Rat King'.format(player.damage))
         print('Ouch! the Rat King hit you for {} damage!'.format(rat_king.damage))
         print('You have {} HP left.'.format(player.hp))
-    return Player, rat_king, is_king_alive
+
+        print()
+
+        if player.hp < 1: 
+            print('--------------------')
+            print('{:^20s}'.format('You died!'))
+            print('{:^20s}'.format('GAME OVER!'))
+            print('--------------------')
+            sys.exit()
+        
+        if rat_king < 1:
+            print('The Rat King is dead! You are victorious!')
+            print('Congratulations! You have defeated the Rat King!')
+            print('The world is saved, you WIN!!')
+            print()
+        
+        break
+    return pdamage
 
 #attack withou an orb
 def failure_attack(Player):#no orb attack sure die
@@ -425,15 +440,15 @@ def failure_attack(Player):#no orb attack sure die
     print('You have {} HP left.'.format(player.hp))#normal attack report
     return player
 
-## Start of the program ##
-Player = main_menu(player)
-while player.locationH != 'Rat King':
-    if player.locationH == 'Town':
-        Player = town_menu(player.day)
-    elif player.locationH == 'Rat':#fight rat then can see town
-        coward = combat_menu(player.day, rat)
-        player = outdoor_menu(player, coward)
-king_combat_menu(player, rat_king)
+# ## Start of the program ##
+# Player = main_menu(player)
+# while player.locationH != 'Rat King':
+#     if player.locationH == 'Town':
+#         Player = town_menu(player.day)
+#     elif player.locationH == 'Rat':#fight rat then can see town
+#         coward = combat_menu(player.day, rat)
+#         player = outdoor_menu(player, coward)
+# king_combat_menu(player, rat_king)
 
  
 
