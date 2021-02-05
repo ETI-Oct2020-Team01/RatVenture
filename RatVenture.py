@@ -217,49 +217,65 @@ def mainmenu_userinput():
     return option
 
 ## Town Menu ##
-def town_menu(Player):
-    town_text = ["View Character", "View Map", "Move", "Rest", "Save Game", "Exit Game"]
-    print('Day {}: You are in a {}.'.format(player.day, player.locationH))
-    while True:#keep looping till user input is accepted
-        #show town text
-        for i in range(len(town_text)):
-            print('{}) {}'.format(i + 1, town_text[i]))
-        try:
-            option = int(input('Enter your choice: '))
-            #check user input for town text
+def town_menu(option):
+    if option == 1:
+        print()
+        print('Day {}: You are in a {}.'.format(player.day, player.location))
+        print("[1] View Character")
+        print("[2] View Map")
+        print("[3] Move")
+        print("[4] Rest")
+        print("[5] Save Game")
+        print("[6] Exit Game")
+    townmenu_userinput()
+
+def townmenu_userinput():
+    print()
+    # Checks for user input/option
+    option = int(input('Enter your choice: '))
+    try:
+    # If user inputs something that is not a proper value, return error message
+        if option > 6 or option < 0:
+            print('Invalid choice!')
+            return 'Invalid choice'
+        else:
+        # Option 1: View Character
             if option == 1:
                 herostats()
-                continue
+                town_menu(1)
+        # Option 2: View Map
             elif option == 2:
-                display_map()
                 print()
-                continue
-            elif option == 3:
                 display_map()
-                print('W = up; A = left; S = down; D = right')
-                move(input('Your move: '))#map movement map
-                print('\n')
-                break
+                town_menu(1)
+        # Option 3: Move Character
+            elif option == 3:
+                print()
+                move()
+                display_map()
+                findevent()
+                combat_menu()
+                town_menu(1)
+        # Option 4: Rest Character
             elif option == 4:
-                #regenerate health
                 print('\n')
-                Player = rest()
-                break
+                rest()
+                town_menu(1)
+        # Option 5: Save Game (Pending)
             elif option == 5:
                 print()
-                #save hero stats and location to file
-                #save_game(hero, day_counter, checklist, coordinates, town_coordinates)
-                continue
-            elif option == 6:
-                exit_game()
-                break
+                town_menu(1)
+        # Option 6: Exit Game
             else:
-                print('Invalid choice')
-                print()
-        except ValueError: #if user inputs string
+                exit_game()
+            return option
+    except ValueError: 
+        # If user inputs string, return error message
             print('Invalid option. Enter only integers!')
             print()
-    return player
+            town_menu(1)
+    # Return the user input    
+    return option
 
 # Outdoor menu
 def outdoor_menu(Player, coward):
@@ -437,14 +453,7 @@ def failure_attack(Player):#no orb attack sure die
     return player
 
 ## Start of the program ##
-Player = main_menu(player)
-while player.locationH != 'Rat King':
-    if player.locationH == 'Town':
-        Player = town_menu(player.day)
-    elif player.locationH == 'Rat':#fight rat then can see town
-        coward = combat_menu(player.day, rat)
-        player = outdoor_menu(player, coward)
-king_combat_menu(player, rat_king)
+main_menu()
 
  
 
