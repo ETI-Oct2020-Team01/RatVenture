@@ -12,3 +12,7 @@ In this computer role-playing game, you will travel around a grid map searching 
 4. [**Shuran Gong**](https://github.com/shur4n) (QA)- S10177280J
 
 Probably less bugs than Cyberpunk 2077
+
+===============================================================
+
+This branch was created due to Visual Studio Code not detecting the old branch (irfan) for some unknown reason which caused many problems.
