@@ -551,8 +551,8 @@ def failure_attack(Player):#no orb attack sure die
     print('You have {} HP left.'.format(player.hp))#normal attack report
     return player
 
-## Start of the program ##
-main_menu()
+# ## Start of the program ##
+# main_menu()
 
  
 
