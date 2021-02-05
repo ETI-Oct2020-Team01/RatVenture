@@ -333,35 +333,40 @@ def outdoormenu_userinput():
 
 # Combat Menu
 def combat_menu(Player, Rat):
-    coward = False
-    print('Day {}: You are in the open.'.format(player.day))
-    is_rat_alive = True#loop till input accepted
-    while True:
-        print('Encounter! - Rat')
-        ratstats()
-        fight_text = ["Attack", "Run"]
-        for i in range(len(fight_text)):#fight text
-            print('{}) {}'.format(i + 1, fight_text[i]))
-        try:
-            option = int(input('Enter your choice: '))
-            if option == 1:
-                Player, Rat, is_rat_alive = attack(is_rat_alive, player, rat)#fight rat
-                if is_rat_alive == True:#rat alive
-                    pass
-                else:
-                    print('The Rat is dead! You are victorious!')
-                    break
-            elif option == 2:
-                coward = run() #rrun away from rat
-                break
+    print()
+    for y in range(8): 
+        for x in range(8): # 'while loop' 
+            if player.locationH == ' ':
+                print('Day {}:'.format(player.day), player.location) # to display day and location text
+                print('Encounter! - Rat') 
+                # To display Rat stats
+                print('Damage: {}'.format(rat.damage))
+                print('Defence: {}'.format(rat.defence))
+                print('HP: {}'.format(rat.hp))
+                print("1) Attack")
+                print("2) Run")
+                combatmenu_userinput()
+            
             else:
-                print('Number entered is out of range')
-                print()
-        except ValueError:
+                town_menu(1)
+
+def combatmenu_userinput():
+    option = int(input('Enter your choice: '))#check for user choice below
+    try:
+        if option > 2 or option < 0:
+            print('Invalid choice')
+            return 'Invalid choice'
+        else:
+            if option == 1:
+                attack()
+            else:
+                run()
+    except ValueError: #if user inputs string
             print('Invalid option. Enter only integers!')
             print()
-        print()
-    return coward
+            combat_menu()
+    # Return the user input    
+    return option
 
 # Attack rat
 def attack(is_rat_alive, Player, Rat):
