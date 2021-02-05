@@ -59,32 +59,6 @@ class Rat(object):
         self.minDamage = 1
         self.maxDamage = 3
         self.defence = 1
-<<<<<<< HEAD
-        self.hp = 10 
-
-rat = Rat()
-
-# rest feature
-def rest():
-    player.hp = 20
-    player.day += 1
-    print('\nYou are fully healed.')
-
-    return player.hp, player.day
-
-# Function to view hero's stats
-def herostats():
-    #stats = player.name + "\nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.damage, player.defence, player.hp, player.day)
-    stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.name, player.damage, player.defence, player.hp, player.day)
-    print(stats)
-    return stats
-
-# Function to view rat's stats
-def ratstats():
-    stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}".format(rat.name, rat.damage, rat.defence, rat.hp)
-    print(stats)
-    return stats
-=======
         self.hp = 10
 
 rat = Rat()
@@ -103,7 +77,6 @@ class RatKing(object):
         self.maxDamage = 12
         self.defence = 5
         self.hp = 25
->>>>>>> origin/nazurah
 
 rat_king = RatKing()
 
@@ -164,29 +137,38 @@ def find_event():
                     event = 'Rat King'
     return event
 
-# Movement based on the user input
-def move(m):
-    prev_positionY, prev_positionX = player.position[0], player.position[1]
-
-    if m.upper() == 'W':
-       player.position[0] -= 1
-    elif m.upper() == 'A':
-       player.position[1] -= 1
-    elif m.upper() == 'S':
-       player.position[0] += 1
-    elif m.upper() == 'D':
-       player.position[1] += 1
-    else:
-       print('Invalid Input')
-    for i in player.position: #if player tries to move out of the map, it will be an invalid move.
-        if i < 0 or i > len(world_map)-1:
-            player.position[0], player.position[1] =  prev_positionY, prev_positionX
-            print('You cannot move there')
-    
-    if [prev_positionY, prev_positionX] != player.position: #if the player has moved to a new space
-        player.day += 1
-        player.locationH = find_event() #find new space event
+# Movement based on the user's input ('W', 'A', 'S', 'D')
+def move():
     display_map()
+    print('W = up; A = left; S = down; D = right')
+    print()
+    player.day += 1 # increase player day by 1
+
+    playermove()
+
+def playermove():
+    playermove = input('Your Move: ')
+    playermove = playermove.upper()
+    valid_choice = ['W', 'A', 'S', 'D']
+    try:
+        while playermove not in valid_choice:
+            print('You have entered an invalid option. Enter only "W", "A", "S", "D" to move.')
+            playermove = input('Your Move: ')
+            playermove = playermove.upper()
+        
+        else:
+            if playermove == 'W':
+                top()
+            elif playermove == 'A':
+                left()
+            elif playermove == 'S':
+                bottom()
+            elif playermove == 'D':
+                right()
+    except ValueError: #if user inputs string
+            print('Invalid option. Enter only letter!')
+            print()
+            move()
 
 # Rest
 def rest():
