@@ -288,79 +288,85 @@ def townmenu_userinput():
     # Return the user input    
     return option
 
-# Outdoor menu
-def outdoor_menu(Player, coward):
-    open_text = ["View Character", "View Map", "Move", "Sense Orb", "Exit Game"]
-    while True:
-        print()
-        for i in range(len(open_text)):
-            print('{}) {}'.format(i + 1, open_text[i]))
-        try:
-            option = int(input('Enter your choice: '))
-        except ValueError:
+## Outdoor menu ##
+def outdoor_menu():
+    print("[1] View Character")
+    print("[2] View Map")
+    print("[3] Move")
+    print("[4] Sense Orb")
+    print("[5] Exit Game")
+
+    outdoormenu_userinput()
+
+
+def outdoormenu_userinput():
+    option = int(input('Enter your choice: ')) #check for user input below 
+    try:
+        if option > 4 or option < 0:
+            print('Invalid choice')
+            return 'Invalid choice'
+        else:
+            if option == 1:
+                herostats()
+                outdoor_menu()
+            elif option == 2:
+                print()
+                display_map()
+                outdoor_menu()
+            elif option == 3:
+                print()
+                move()
+                display_map()
+                find_event()
+            elif option == 4:
+                #sense_orb()
+                outdoor_menu()
+            else:
+                exit_game()
+            return option
+    except ValueError: #if user inputs string
             print('Invalid option. Enter only integers!')
             print()
-            continue
-        if option == 1:
-            herostats()
-            continue
-        elif option == 2:
-            display_map()
-            print()
-            continue
-        elif option == 3:
-            display_map()
-            print('W = up; A = left; S = down; D = right')
-            move(input('Your move: '))
-            break
-        elif option == 4:
-            if coward == True: #cant get orb till you kill rat
-                coward = combat_menu(Player, Rat)
-            else:
-                print()
-                #sense_orb()
-                
-            continue
-        elif option == 5:
-            exit_game() #exit game
-            break
-        else:
-            print('Invalid choice')
-            print()
-            continue  
-    return player
+            outdoor_menu()
+    # Return the user input    
+    return option
 
 # Combat Menu
 def combat_menu(Player, Rat):
-    coward = False
-    print('Day {}: You are in the open.'.format(player.day))
-    is_rat_alive = True#loop till input accepted
-    while True:
-        print('Encounter! - Rat')
-        ratstats()
-        fight_text = ["Attack", "Run"]
-        for i in range(len(fight_text)):#fight text
-            print('{}) {}'.format(i + 1, fight_text[i]))
-        try:
-            option = int(input('Enter your choice: '))
-            if option == 1:
-                Player, Rat, is_rat_alive = attack(is_rat_alive, player, rat)#fight rat
-                if is_rat_alive == True:#rat alive
-                    pass
-                else:
-                    print('The Rat is dead! You are victorious!')
-                    break
-            elif option == 2:
-                coward = run() #rrun away from rat
-                break
+    print()
+    for y in range(8): 
+        for x in range(8): # 'while loop' 
+            if player.locationH == ' ':
+                print('Day {}:'.format(player.day), player.location) # to display day and location text
+                print('Encounter! - Rat') 
+                # To display Rat stats
+                print('Damage: {}'.format(rat.damage))
+                print('Defence: {}'.format(rat.defence))
+                print('HP: {}'.format(rat.hp))
+                print("1) Attack")
+                print("2) Run")
+                combatmenu_userinput()
+            
             else:
-                print('Number entered is out of range')
-                print()
-        except ValueError:
+                town_menu(1)
+
+def combatmenu_userinput():
+    option = int(input('Enter your choice: '))#check for user choice below
+    try:
+        if option > 2 or option < 0:
+            print('Invalid choice')
+            return 'Invalid choice'
+        else:
+            if option == 1:
+                attack()
+            else:
+                run()
+    except ValueError: #if user inputs string
             print('Invalid option. Enter only integers!')
             print()
-        print()
-    return coward
+            combat_menu()
+    # Return the user input    
+    return option
 
 # Attack rat
 def attack(is_rat_alive, Player, Rat):
