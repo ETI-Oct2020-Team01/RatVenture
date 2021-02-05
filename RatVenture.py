@@ -23,7 +23,7 @@ world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],\
 
 # Hero's stats
 class Player:
-    # the player will start with these stats
+    # The player will start the game with these stats and variables.
     def __init__(self):
         self.name = 'The Hero'
         self.damage = '2 to 4'
@@ -32,8 +32,10 @@ class Player:
         self.defence = 1
         self.hp = 20
         self.day = 1
-        self.position = [0,0]
-        self.locationH = 'Town'
+        self.positionX = 0
+        self.positionY = 0
+        self.location = 'You are in a Town'
+        self.locationH = 'H'
         self.orb = [0,0]
         self.checklist = False
 
@@ -42,8 +44,6 @@ class Player:
 
 player = Player()
 
-<<<<<<< HEAD
-=======
 def herostats():
     stats = "\nName: {} \nDamage: {}\nDefence: {}\nHP: {}\nDay: {}".format(player.name, player.damage, player.defence, player.hp, player.day)
     print(stats)
@@ -51,7 +51,6 @@ def herostats():
         print('You are holding the Orb of Power')
     return stats
 
->>>>>>> origin/nazurah
 # Rat's stats
 class Rat(object):
     def __init__(self):
