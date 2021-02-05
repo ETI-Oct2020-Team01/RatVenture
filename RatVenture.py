@@ -148,7 +148,8 @@ def find_event():
     elif player.locationH == 'K': #if the space is a rat king, player encounters rat king
         player.location = 'You see the Rat King'
 
-# Movement based on the user's input ('W', 'A', 'S', 'D')
+# Movement based on the user's input (
+# 'W' = move up, 'A' = move left, 'S' = move down, 'D' = move right)
 def move():
     display_map()
     print('W = up; A = left; S = down; D = right')
@@ -163,7 +164,7 @@ def playermove():
     valid_choice = ['W', 'A', 'S', 'D']
     try:
         while playermove not in valid_choice:
-            print('You have entered an invalid option. Enter only "W", "A", "S", "D" to move.')
+            print('You entered an invalid option. Enter only "W", "A", "S", "D" to move.')
             playermove = input('Your Move: ')
             playermove = playermove.upper()
         
@@ -176,11 +177,62 @@ def playermove():
                 bottom()
             elif playermove == 'D':
                 right()
-    except ValueError: #if user inputs string
-            print('Invalid option. Enter only letter!')
+    except ValueError:
+            print('You entered an invalid option. Enter only "W", "A", "S", "D" to move.')
             print()
             move()
 
+# Character movement: move up ('W')
+def top():
+    mlist = [0,1,2,3,4,5,6,7]
+    player.positionY -= 1
+    #Detect whether player is attempting to move out of map boundaries
+    if player.positionY < 0 and player.positionX in mlist:
+        player.positionY += 1
+        player.day -= 1
+        print('Out of bounds! You are not allowed to move out of the map!')
+        print()
+        updatelocation()
+    return player.positionY, player.positionX
+
+# Character movement: move down ('S')
+def bottom():
+    mlist = [0,1,2,3,4,5,6,7]
+    player.positionY += 1
+    #Detect whether player is attempting to move out of map boundaries
+    if player.positionY > 7 and player.positionX in mlist:
+        player.positionY -= 1
+        player.day -= 1
+        print('Out of bounds! You are not allowed to move out of the map!')
+        print()
+        updatelocation()
+    return player.positionY, player.positionX
+
+# Character movement: move up ('A')
+def left():
+    mlist = [0,1,2,3,4,5,6,7]
+    player.positionX -= 1
+    #Detect whether player is attempting to move out of map boundaries
+    if player.positionX < 0 and player.positionX not in mlist:
+        player.positionX += 1
+        player.day -= 1
+        print('Out of bounds! You are not allowed to move out of the map!')
+        print()
+        updatelocation()
+    return player.positionY, player.positionX
+
+# Character movement: move right ('D')
+def right():
+    mlist = [0,1,2,3,4,5,6,7]
+    player.positionX += 1
+    #Detect whether player is attempting to move out of map boundaries
+    if player.positionX > 7 and player.positionX not in mlist:
+        player.positionX -= 1
+        player.day -= 1
+        print('Out of bounds! You are not allowed to move out of the map!')
+        print()
+        updatelocation()
+    return player.positionY, player.positionX
 # Rest
 def rest():
     player.hp = 20
