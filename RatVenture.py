@@ -421,36 +421,53 @@ def combatmenu_userinput():
     return option
 
 # Attack rat
-def attack(is_rat_alive, Player, Rat):
-    if player.checklist == True:#orb is obtained
+def attack():
+    # Check whether the Orb of Power is obtained
+        #if orb is obtained (True), boost player damage from 2-4 to 7-9
+    if player.checklist == True:
         player.damage = randint(7, 9) 
         player.damage -= 1
-    elif player.checklist == False:#no orb
+        # if orb is not obtained (False), damage remains the same at 2-4
+    elif player.checklist == False:
         player.damage = randint(2, 4)
         player.damage -= 1
-    rat.hp -= player.damage 
-    rat.damage = randint(1, 3) #damage to rat
-    print('You dealt {} damage to the Rat'.format(player.damage))
-    if rat.hp < 1:
-        is_rat_alive = False # rat survived
-        return player, rat, is_rat_alive
-    elif rat.hp > 1:
-        if player.checklist == True:# have orb damage taken
-            rat.damage -= 6
-            if rat.damage <= 0:
-                rat.damage = 0
-        else: #no orb damage taken
-            rat.damage -= 1
-        player.hp -= rat.damage
-        print('Ouch! the Rat hit you for {} damage!'.format(rat.damage))#damage taken
-        print('You have {} HP left.'.format(player.hp))#hp left
-    if player.hp < 1:# player die
-        print('--------------------')
-        print('{:^20s}'.format('YOU DIED!'))
-        print('{:^20s}'.format('GAME OVER!'))
-        print('--------------------')
-        exit()
-    return player, rat, is_rat_alive
+    
+    # While rat is alive, perform damage calculations for hero and rat damage
+    while rat.hp > 0:
+        # hero damage calculation (randint to randomise between min and max damage)
+        playerdamage = random.randint(player.minDamage, player.maxDamage) 
+        pdamage = playerdamage - rat.defence
+        rat.hp = rat.hp - pdamage
+
+        # rat damage calculation (randint to randomise between min and max damage)
+        ratdamage = random.randint(rat.minDamage, rat.maxDamage)
+        rdamage = ratdamage - player.defence
+        player.hp = player.hp - rdamage
+
+        # Output for attacking scenario with rat
+        print()
+        print('Oof! The Rat hit you for {} damage!'.format(pdamage)) # Damage taken
+        print('You are left with {} HP.'.format(player.hp)) # HP left
+
+        print()
+
+        # Output for when player dies and reaches 0 HP; display game over message and exits game
+        if player.hp < 1:
+            print('--------------------')
+            print('{:^20s}'.format('YOU DIED!'))
+            print('{:^20s}'.format('GAME OVER!'))
+            print('--------------------')
+            sys.exit()
+        
+        # Output for when player sucessfully defeats rat, display sucesss message and continue display outdoor menu
+        if rat.hp <1:
+            print('The Rat is dead! You are victorious!')
+            print()
+            rat.hp = 8 
+            outdoor_menu()
+        break
+    return rat.hp, pdamage
+
 
 ## Rat King menu ##
 def king_combat_menu():
