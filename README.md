@@ -1,4 +1,4 @@
-# 🐀 RatVenture: A python based role-playing game!
+# 🐀 RatVenture: A python based role-playing adventure game!
 
 You are 👑 The Hero. The world is being invaded by the Rat King and his endless rat minions. The only way to defeat the Rat King is to find the Orb of Power located in the faraway land of Katalina.
 
@@ -12,7 +12,3 @@ In this computer role-playing game, you will travel around a grid map searching 
 4. [**Shuran Gong**](https://github.com/shur4n) (QA)- S10177280J
 
 Probably less bugs than Cyberpunk 2077
-
-===============================================================
-
-This branch was created due to Visual Studio Code not detecting the old branch (irfan) for some unknown reason which caused many problems.
