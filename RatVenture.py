@@ -86,27 +86,30 @@ def ratkingstats():
 
 # To display the world map
 def display_map():
-    for row in range(len(world_map)): #the y axis of the world map
+    row = ''
+    for y in range(8): #the y axis of the world map
         print('+---+---+---+---+---+---+---+---+')
-        print('|',end='')
-        for col in range(len(world_map[row])): #the x axis of the world map
-            if player.position == [row, col]:
-                 #if the player is on the space to replace the letter with the player's letter 'H'
-                if world_map[row][col] == ' ':
-                    world_map[row][col] = 'H'
-                if world_map[row][col] == 'T':
-                    world_map[row][col] = 'H/T'
-                if world_map[row][col] == 'K':
-                    world_map[row][col] = 'H/K'
-            else: #else to replace it back to the default letter
-                if world_map[row][col] == 'H':
-                    world_map[row][col] = ' '
-                if world_map[row][col] == 'H/T':
-                    world_map[row][col] = 'T'
-                if world_map[row][col] == 'H/K':
-                    world_map[row][col] = 'K'
-            print('{:^3}|'.format(world_map[row][col]), end='')
-        print()
+        for x in range(8): #the x axis of the world map
+            if player.positionX == x and player.positionY == y:
+                #if the player is on the space to replace the letter with the player's letter 'H'
+                if world_map[y][x] == ' ':
+                    row = row + '| H' + ' '
+                else: 
+                    row = row + '|H/' + str(world_map[y][x]) + ''
+
+                if world_map[y][x] == 'T':
+                    player.locationH = 'T'
+                
+                elif world_map[y][x] == 'K':
+                    player.locationH = 'K'
+
+                elif world_map[y][x] == ' ':
+                    player.locationH = ' '
+            else: 
+                row = row + '| ' + str(world_map[x][y]) + ' '
+        print(row + '|')
+        row = ''
+        
     print('+---+---+---+---+---+---+---+---+')
 
 
