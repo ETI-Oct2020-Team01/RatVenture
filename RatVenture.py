@@ -316,7 +316,7 @@ def townmenu_userinput():
                 print()
                 move()
                 display_map()
-                findevent()
+                find_event()
                 combat_menu()
                 town_menu(1)
         # Option 4: Rest Character
@@ -384,7 +384,7 @@ def outdoormenu_userinput():
     return option
 
 # Combat Menu
-def combat_menu(Player, Rat):
+def combat_menu():
     print()
     for y in range(8): 
         for x in range(8): # 'while loop' 
@@ -452,42 +452,41 @@ def attack(is_rat_alive, Player, Rat):
         exit()
     return player, rat, is_rat_alive
 
-# Rat King menu
-def king_combat_menu(Player, RatKing):
-    print('Day {}: You see the Rat King!'.format(player.day))
-    rat_king
-    is_king_alive = True #run till king == False
-    while True:
-        print('Encounter! - Rat King')
-        ratkingstats()
-        fight_text = ["Attack", "Run"]
-        for i in range(len(fight_text)):# show fight or run
-            print('{}) {}'.format(i + 1, fight_text[i]))
-        print()
-        try:
-            option = int(input('Enter choice: '))
+## Rat King menu ##
+def king_combat_menu():
+    if player.locationH == 'K':
+        print('Day {}: You see the Rat King!'.format(player.day), player.location)
+        print('Damage: {}'.format(rat_king.damage))
+        print('Defence: {}'.format(rat_king.defence))
+        print('HP: {}'.format(rat_king.hp))
+        print("1) Attack")
+        print("2) Run")
+
+        kingcombatmenu_userinput()
+    else:
+        town_menu(1)
+
+def kingcombatmenu_userinput():
+    option = int(input('Enter your choice: '))#check for user choice below
+    try:
+        if option > 2 or option < 0:
+            print('Invalid choice')
+            return 'Invalid choice'
+        else:
             if option == 1:
                 if player.checklist == True:
                     king_attack()
-                    if is_king_alive == False:
-                        print('The Rat King is dead! You are victorious!')
-                        print('Congratulations! You have defeated the Rat King!')
-                        print('The world is saved, you WIN!!')
-                        break
-                    else:
-                        pass
                 else:
                     failure_attack(Player)
             elif option == 2:
                 run()
-                break
-            else:
-                print('Invalid choice!')
-                print()
-        except ValueError: 
+            return option
+    except ValueError: #if user inputs string
             print('Invalid option. Enter only integers!')
             print()
-    return 
+            king_combat_menu()
+    # Return the user input    
+    return option
 
 #successful attack
 def king_attack():#orb attack
