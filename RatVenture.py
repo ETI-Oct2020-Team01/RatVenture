@@ -24,7 +24,7 @@ world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],\
 
 # Hero's stats
 class Player:
-    # the player will start with these stats
+    # The player will start the game with these stats and variables.
     def __init__(self):
         self.name = 'The Hero'
         self.damage = '2 to 4'
@@ -33,8 +33,10 @@ class Player:
         self.defence = 1
         self.hp = 20
         self.day = 1
-        self.position = [0,0]
-        self.locationH = 'Town'
+        self.positionX = 0
+        self.positionY = 0
+        self.location = 'You are in a Town'
+        self.locationH = 'H'
         self.orb = [0,0]
         self.checklist = False
 
@@ -139,29 +141,38 @@ def find_event():
                     event = 'Rat King'
     return event
 
-# Movement based on the user input
-def move(m):
-    prev_positionY, prev_positionX = player.position[0], player.position[1]
-
-    if m.upper() == 'W':
-       player.position[0] -= 1
-    elif m.upper() == 'A':
-       player.position[1] -= 1
-    elif m.upper() == 'S':
-       player.position[0] += 1
-    elif m.upper() == 'D':
-       player.position[1] += 1
-    else:
-       print('Invalid Input')
-    for i in player.position: #if player tries to move out of the map, it will be an invalid move.
-        if i < 0 or i > len(world_map)-1:
-            player.position[0], player.position[1] =  prev_positionY, prev_positionX
-            print('You cannot move there')
-    
-    if [prev_positionY, prev_positionX] != player.position: #if the player has moved to a new space
-        player.day += 1
-        player.locationH = find_event() #find new space event
+# Movement based on the user's input ('W', 'A', 'S', 'D')
+def move():
     display_map()
+    print('W = up; A = left; S = down; D = right')
+    print()
+    player.day += 1 # increase player day by 1
+
+    playermove()
+
+def playermove():
+    playermove = input('Your Move: ')
+    playermove = playermove.upper()
+    valid_choice = ['W', 'A', 'S', 'D']
+    try:
+        while playermove not in valid_choice:
+            print('You have entered an invalid option. Enter only "W", "A", "S", "D" to move.')
+            playermove = input('Your Move: ')
+            playermove = playermove.upper()
+        
+        else:
+            if playermove == 'W':
+                top()
+            elif playermove == 'A':
+                left()
+            elif playermove == 'S':
+                bottom()
+            elif playermove == 'D':
+                right()
+    except ValueError: #if user inputs string
+            print('Invalid option. Enter only letter!')
+            print()
+            move()
 
 # Rest
 def rest():
@@ -279,6 +290,135 @@ def outdoor_menu(Player, coward):
             print('W = up; A = left; S = down; D = right')
             move(input('Your move: '))
             break
+<<<<<<< HEAD
+            
+
+# start of the game        
+        while game_over == False:
+            try:
+# if player is in town
+                if player.locationH == 'Town':
+                    print('\nDay {}: You are in Town'.format(player.day))
+                    print("=======================")
+                    show_menu('town')
+                    choice = int(input('Enter your option: '))
+                    print('\n')
+
+                    if choice == 1: #view the player stats
+                        herostats()
+
+                    elif choice == 2: # view the world map
+                        display_map()
+                    
+                    elif choice == 3: # player to move around the map
+                        display_map()
+                        print('W = up; A = left; S = down; D = right')
+                        move(input('Your move: '))
+                        print('\n')
+                    
+                    elif choice == 4: # rest
+                        rest()
+                    
+                    #elif choice == 5: #save file 
+
+                    elif choice == 6: # exit game
+                        game_over = True
+
+                    else:
+                        print('Invalid Input\n')
+
+# if the player is outside 
+                if player.event == 'Outside':
+                    print('Day {}: You are out in the open.'.format(player.day))
+                    
+
+                    #mob = rat.Rat()[randint(0,len(rat.Rat)-1)]
+                    #day_multipler = player.day//10
+                    player.event = 'Encounter' # to change the player event to encounter
+
+# if the player is in an encounter 
+                if player.event == 'Encounter':
+                    ratstats()
+                    show_menu('fight')
+                    choice = int(input('Enter your choice: '))
+                    if choice == 1: #if the player, chooses to fight the mob
+                        player.event = 'Combat' #change player event to combat 
+                    elif choice == 2: #if the player, chooses to run away
+                        player.event = 'Ran' #change player event to ran
+                    else:
+                        print('Invalid Input\n')
+
+#if player is in combat
+                if player.event == 'Combat':
+                    damage_dealt = (randint(player.minDamage, player.maxDamage)) - rat.defence
+                    damage_taken = randint(rat.minDamage, rat.maxDamage) - player.defence 
+
+                    if damage_dealt <= 0: #if the damage is in negative range, set to 0
+                        damage_dealt = 0
+                    #if rat. == 'Rat King' and player.orb == False:
+                    #print('\nYou do not have the Orb of Power - the Rat King is immune!')
+                    # damage_dealt = 0
+
+                    rat.hp -= damage_dealt #player deals the damage first to rat
+                    print('\nYou deal {} damage to the Rat'.format(damage_dealt))
+                    if rat.hp <= 0: # the rat has died
+                        print('The Rat is dead! You are victorious!')
+                    
+                    else: #otherwise the player will receive damage from the rat
+                        if damage_taken <= 0:
+                            damage_taken = 0
+                        
+                        print('Ouch! The Rat has hit you for {} damage!'.format(damage_taken))
+                        player.hp -= damage_taken
+                        if player.hp <=0:
+                            player.hp = 0
+                        
+                        print('You have {} HP left.'.format(player.hp))
+                        if player.hp == 0:
+                            print('You died! Game Over.')
+                            game_over = True
+                        else:
+                            player.event = 'Encounter'
+
+#if player ran away
+                if player.event == 'Ran':
+                    print('\nYou run and hide.')
+                    rat.hp #resorts enemy mob health
+                    player.event = 'Open' #change to player event open
+
+#if player is in open
+                if player.event == 'Open':
+                    print('Day {}: You are out in the open.'.format(player.day))
+                    show_menu('open') 
+                    option = int(input('Enter your choice: '))
+
+                    if option == 1: 
+                        if rat.hp <= 0:
+                            herostats()
+                        else:
+                            player.event = 'Encounter'
+
+                    elif option == 2: #view map
+                        if rat.hp <= 0: #if the player has killed the mob
+                            display_map()
+                        else: #otherwise, player will go back into encounter event
+                            player.event = 'Encounter'
+                            
+                    elif option == 3: #move
+                        display_map()
+                        print('W = up; A = left; S = down; D = right')
+                        move(input('Your move: '))
+                            
+                    elif option == 4: #exit game
+                        game_over = True
+
+                    else:
+                        print('Invalid Input\n')
+
+            except: #if the player has input an invalid input during the game
+                print('Invalid Input\n')
+        else: #if game_over == True
+=======
         elif option == 4:
             if coward == True: #cant get orb till you kill rat
                 coward = combat_menu(Player, Rat)
@@ -289,6 +429,7 @@ def outdoor_menu(Player, coward):
             continue
         elif option == 5:
             exit_game() #exit game
+>>>>>>> origin/nazurah
             break
         else:
             print('Invalid choice')

@@ -1,4 +1,4 @@
-# 🐀 RatVenture: A python based role-playing game!
+# 🐀 RatVenture: A python based role-playing adventure game!
 
 You are 👑 The Hero. The world is being invaded by the Rat King and his endless rat minions. The only way to defeat the Rat King is to find the Orb of Power located in the faraway land of Katalina.
 
