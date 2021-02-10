@@ -259,7 +259,7 @@ def mainmenu_userinput():
     try:
         if option > 3 or option < 0:
             print('Invalid choice!')
-            return 'Invalid choice'
+            return 'Invalid choice!'
         else:
              # Option 1: New Game, display town menu
             if option == 1:
@@ -275,7 +275,6 @@ def mainmenu_userinput():
         #if user inputs string/non-integers
             print('Invalid option. Enter only integers!')
             print()
-            main_menu()
     # Return the user input    
     return option
 
