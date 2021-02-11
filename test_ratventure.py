@@ -33,10 +33,10 @@ def test_view_rat_stats():
    assert value == "\nDamage: {}\nDefence: {}\nHP: {}".format(rat.damage, rat.defence, rat.hp)
 
 #test for run function
-def test_run_function():
+def test_run_function(monkeypatch):
        """This is to test the run function when encountering a rat."""
-       combat_menu():
-              value = 2
-              combatmenu_userinput(value)
-       
+       monkeypatch.setattr("builtins.input", lambda _: 2)
+       value = combat_menu()
+       assert value == 'You run and hide'
+      
        
