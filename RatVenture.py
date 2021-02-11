@@ -255,26 +255,28 @@ def main_menu():
 def mainmenu_userinput():
     print()
     # Get user input in Main Menu and validate
-    option = int(input('Enter your choice: '))
-    try:
-        if option > 3 or option < 0:
-            print('Invalid choice!')
-            return 'Invalid choice!'
-        else:
-             # Option 1: New Game, display town menu
-            if option == 1:
-                town_menu(1)
-            # Option 2: Resume Game
-            elif option == 2:
-                print() 
+    while True:
+        try:
+            option = int(input('Enter your choice: '))
+            if option > 3 or option < 0:
+                print('Invalid choice!')
+                continue
             else:
-            # Option 3: Exit Game
-                exit_game()
-            return option
-    except ValueError: 
-        #if user inputs string/non-integers
-            print('Invalid option. Enter only integers!')
-            print()
+                # Option 1: New Game, display town menu
+                if option == 1:
+                    town_menu(1)
+                # Option 2: Resume Game
+                elif option == 2:
+                    print() 
+                else:
+                # Option 3: Exit Game
+                    exit_game()
+                return option
+        except ValueError: 
+            #if user inputs string/non-integers
+                print('Invalid option. Enter only integers!')
+                print()
+                continue
     # Return the user input    
     return option
 
@@ -294,48 +296,49 @@ def town_menu(option):
 def townmenu_userinput():
     print()
     # Checks for user input/option
-    option = int(input('Enter your choice: '))
-    try:
-    # If user inputs something that is not a proper value, return error message
-        if option > 6 or option < 0:
-            print('Invalid choice!')
-            return 'Invalid choice'
-        else:
-        # Option 1: View Character
-            if option == 1:
-                herostats()
-                town_menu(1)
-        # Option 2: View Map
-            elif option == 2:
-                print()
-                display_map()
-                town_menu(1)
-        # Option 3: Move Character
-            elif option == 3:
-                print()
-                move()
-                display_map()
-                find_event()
-                combat_menu()
-                town_menu(1)
-        # Option 4: Rest Character
-            elif option == 4:
-                print('\n')
-                rest()
-                town_menu(1)
-        # Option 5: Save Game (Pending)
-            elif option == 5:
-                print()
-                town_menu(1)
-        # Option 6: Exit Game
+    while True:
+        try:
+            option = int(input('Enter your choice: '))
+        # If user inputs something that is not a proper value, return error message
+            if option > 6 or option < 0:
+                print('Invalid choice!')
+                return 'Invalid choice'
             else:
-                exit_game()
-            return option
-    except ValueError: 
-        # If user inputs string, return error message
-            print('Invalid option. Enter only integers!')
-            print()
-            town_menu(1)
+            # Option 1: View Character
+                if option == 1:
+                    herostats()
+                    continue
+            # Option 2: View Map
+                elif option == 2:
+                    print()
+                    display_map()
+                    town_menu(1)
+            # Option 3: Move Character
+                elif option == 3:
+                    print()
+                    move()
+                    display_map()
+                    find_event()
+                    combat_menu()
+                    town_menu(1)
+            # Option 4: Rest Character
+                elif option == 4:
+                    print('\n')
+                    rest()
+                    town_menu(1)
+            # Option 5: Save Game (Pending)
+                elif option == 5:
+                    print()
+                    town_menu(1)
+            # Option 6: Exit Game
+                else:
+                    exit_game()
+                return option
+        except ValueError: 
+            # If user inputs string, return error message
+                print('Invalid option. Enter only integers!')
+                print()
+                continue
     # Return the user input    
     return option
 
@@ -351,34 +354,35 @@ def outdoor_menu():
 
 
 def outdoormenu_userinput():
-    option = int(input('Enter your choice: ')) #check for user input below 
-    try:
-        if option > 4 or option < 0:
-            print('Invalid choice')
-            return 'Invalid choice'
-        else:
-            if option == 1:
-                herostats()
-                outdoor_menu()
-            elif option == 2:
-                print()
-                display_map()
-                outdoor_menu()
-            elif option == 3:
-                print()
-                move()
-                display_map()
-                find_event()
-            elif option == 4:
-                #sense_orb()
-                outdoor_menu()
+    while True: 
+        try:
+            option = int(input('Enter your choice: ')) #check for user input below
+            if option > 4 or option < 0:
+                print('Invalid choice')
+                continue
             else:
-                exit_game()
-            return option
-    except ValueError: #if user inputs string
-            print('Invalid option. Enter only integers!')
-            print()
-            outdoor_menu()
+                if option == 1:
+                    herostats()
+                    outdoor_menu()
+                elif option == 2:
+                    print()
+                    display_map()
+                    outdoor_menu()
+                elif option == 3:
+                    print()
+                    move()
+                    display_map()
+                    find_event()
+                elif option == 4:
+                    #sense_orb()
+                    outdoor_menu()
+                else:
+                    exit_game()
+                return option
+        except ValueError: #if user inputs string
+                print('Invalid option. Enter only integers!')
+                print()
+                continue
     # Return the user input    
     return option
 
@@ -402,20 +406,21 @@ def combat_menu():
                 town_menu(1)
 
 def combatmenu_userinput():
-    option = int(input('Enter your choice: '))#check for user choice below
-    try:
-        if option > 2 or option < 0:
-            print('Invalid choice')
-            return 'Invalid choice'
-        else:
-            if option == 1:
-                attack()
+    while True:
+        try:
+            option = int(input('Enter your choice: '))#check for user choice below
+            if option > 2 or option < 0:
+                print('Invalid choice')
+                continue
             else:
-                run()
-    except ValueError: #if user inputs string
-            print('Invalid option. Enter only integers!')
-            print()
-            combat_menu()
+                if option == 1:
+                    attack()
+                else:
+                    run()
+        except ValueError: #if user inputs string
+                print('Invalid option. Enter only integers!')
+                print()
+                continue
     # Return the user input    
     return option
 
@@ -483,24 +488,25 @@ def king_combat_menu():
         town_menu(1)
 
 def kingcombatmenu_userinput():
-    option = int(input('Enter your choice: '))#check for user choice below
-    try:
-        if option > 2 or option < 0:
-            print('Invalid choice')
-            return 'Invalid choice'
-        else:
-            if option == 1:
-                if player.checklist == True:
-                    king_attack()
-                else:
-                    failure_attack(Player)
-            elif option == 2:
-                run()
-            return option
-    except ValueError: #if user inputs string
-            print('Invalid option. Enter only integers!')
-            print()
-            king_combat_menu()
+    while True:
+        try:
+            option = int(input('Enter your choice: '))#check for user choice below
+            if option > 2 or option < 0:
+                print('Invalid choice')
+                continue
+            else:
+                if option == 1:
+                    if player.checklist == True:
+                        king_attack()
+                    else:
+                        failure_attack(Player)
+                elif option == 2:
+                    run()
+                return option
+        except ValueError: #if user inputs string
+                print('Invalid option. Enter only integers!')
+                print()
+                continue
     # Return the user input    
     return option
 
