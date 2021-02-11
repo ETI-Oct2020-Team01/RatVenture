@@ -5,6 +5,7 @@ You are 👑 The Hero. The world is being invaded by the Rat King and his endles
 In this computer role-playing game, you will travel around a grid map searching for the Orb of Power and fighting rat minions. On the map are various towns where you can rest and save your game. Once you find the Orb of Power, the Rat King loses.
 
 ## Project Members and Roles
+<hr>
 
 1. [**Edwin Joseph**](https://github.com/cheatcode131080) (Project Manager) - S10189685C
 2. [**Irfan Syahmi**](https://github.com/irfan-np) (Developer) - S10189620K
