@@ -35,7 +35,6 @@ def test_view_rat_stats():
 #test for run function
 def test_run_function():
        """This is to test the run function when encountering a rat."""
-       def herostats():
-              player.damage = 4
        value = run()
+       
        
