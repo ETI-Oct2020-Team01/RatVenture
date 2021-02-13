@@ -35,7 +35,7 @@ class Player:
         self.day = 1
         self.positionX = 0
         self.positionY = 0
-        self.location = 'You are in a Town'
+        self.location = 'Town'
         self.locationH = 'H'
         self.orb = [0,0]
         self.checklist = False
