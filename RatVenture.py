@@ -320,7 +320,7 @@ def townmenu_userinput():
                     display_map()
                     find_event()
                     combat_menu()
-                    town_menu(1)
+                    print()
             # Option 4: Rest Character
                 elif option == 4:
                     print('\n')
@@ -344,11 +344,13 @@ def townmenu_userinput():
 
 ## Outdoor menu ##
 def outdoor_menu():
-    print("[1] View Character")
-    print("[2] View Map")
-    print("[3] Move")
-    print("[4] Sense Orb")
-    print("[5] Exit Game")
+    if player.locationH == ' ':
+        print('Day {}: You are in a {}.'.format(player.day, player.location))
+        print("[1] View Character")
+        print("[2] View Map")
+        print("[3] Move")
+        print("[4] Sense Orb")
+        print("[5] Exit Game")
 
     outdoormenu_userinput()
 
@@ -364,15 +366,20 @@ def outdoormenu_userinput():
                 if option == 1:
                     herostats()
                     outdoor_menu()
+                    print()
                 elif option == 2:
                     print()
                     display_map()
                     outdoor_menu()
+                    print()
                 elif option == 3:
                     print()
                     move()
                     display_map()
                     find_event()
+                    print()
+                    combat_menu()
+                    print()
                 elif option == 4:
                     #sense_orb()
                     outdoor_menu()
