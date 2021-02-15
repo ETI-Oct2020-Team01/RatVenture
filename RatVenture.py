@@ -363,15 +363,18 @@ def outdoormenu_userinput():
                 print('Invalid choice')
                 continue
             else:
+                # Option 1: View Character
                 if option == 1:
                     herostats()
                     outdoor_menu()
                     print()
+                # Option 2: View Map
                 elif option == 2:
                     print()
                     display_map()
                     outdoor_menu()
                     print()
+                # Option 3: Move Character
                 elif option == 3:
                     print()
                     move()
@@ -380,9 +383,11 @@ def outdoormenu_userinput():
                     print()
                     combat_menu()
                     print()
+                # Option 4: Sense Orb (Pending)
                 elif option == 4:
                     #sense_orb()
                     outdoor_menu()
+                # Option 5: Exit Game
                 else:
                     exit_game()
                 return option
@@ -420,8 +425,10 @@ def combatmenu_userinput():
                 print('Invalid choice')
                 continue
             else:
+                # Option 1: Attack
                 if option == 1:
                     attack()
+                # Option 2: Run
                 else:
                     run()
         except ValueError: #if user inputs string
