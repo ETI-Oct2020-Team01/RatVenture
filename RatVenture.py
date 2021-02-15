@@ -357,7 +357,7 @@ def outdoormenu_userinput():
     while True: 
         try:
             option = int(input('Enter your choice: ')) #check for user input below
-            if option > 4 or option < 0:
+            if option > 5 or option < 0:
                 print('Invalid choice')
                 continue
             else:
