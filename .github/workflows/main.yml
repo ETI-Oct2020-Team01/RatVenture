@@ -29,15 +29,16 @@ jobs:
       id: TestWithPytest
       run: |
            pytest -v --junitxml=report.xml
-    - if: ${{failure()}}       
-      name: Create Issues
-      uses: nashmaniac/create-issue-action@v1.1
-      with:
-          title: Build Failed
-          token: ${{secrets.GITHUB_TOKEN}}
-          assignees: ${{github.actor}}
-          labels: workflow-failed
-          body: Workflow failed for commit ${{github.sha}} @ ${{github.ref}}
+# removed "create issue" feature when pytest fails           
+#     - if: ${{failure()}}       
+#       name: Create Issues
+#       uses: nashmaniac/create-issue-action@v1.1
+#       with:
+#           title: Build Failed
+#           token: ${{secrets.GITHUB_TOKEN}}
+#           assignees: ${{github.actor}}
+#           labels: workflow-failed
+#           body: Workflow failed for commit ${{github.sha}} @ ${{github.ref}}
     
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1.5
