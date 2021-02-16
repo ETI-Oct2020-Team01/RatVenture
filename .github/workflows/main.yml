@@ -57,3 +57,19 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_PROJECT_URL: https://github.com/ETI-Oct2020-Team01/RatVenture
         GITHUB_PROJECT_COLUMN_NAME: To do
+
+    - name: send mail
+      uses: cheatcode131080/action-send-mail@v2
+      with:
+       server_address: smtp.gmail.com
+       server_port: 465
+       username: ${{secrets.MAIL_USERNAME}}
+       password: ${{secrets.MAIL_PASSWORD}}
+       subject: Github Actions job result
+       body: ${{env.RELEASE_VERSION}} of ETI TEAM is completed successfully
+       to: ict.eti.consultants@gmail.com
+       from: assassined13@gmail.com
+    
+
+     
+    
