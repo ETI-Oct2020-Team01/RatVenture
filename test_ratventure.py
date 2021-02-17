@@ -52,11 +52,11 @@ def test_attack_function():
        value = attack()
        assert rat.hp < 10
 
-# Test for orb stats function    
-def test_heroorb_stats():
-      """
-      This is to test whether the hero's stats are buffed accordingly when wielding the Orb of Power.
-      """
-      value = herostats()
-      player.checklist == True
-      assert player.damage > 7 
+# # Test for orb stats function    
+# def test_heroorb_stats():
+#       """
+#       This is to test whether the hero's stats are buffed accordingly when wielding the Orb of Power.
+#       """
+#       value = herostats()
+#       player.checklist == True
+#       assert player.damage > 7 
