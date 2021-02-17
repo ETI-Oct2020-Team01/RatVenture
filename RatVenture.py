@@ -284,7 +284,7 @@ def mainmenu_userinput():
 def town_menu(option):
     if option == 1:
         print()
-        print('Day {}: You are in a {}.'.format(player.day, player.location))
+        print('Day {}: {}.'.format(player.day, player.location))
         print("[1] View Character")
         print("[2] View Map")
         print("[3] Move")
@@ -345,7 +345,7 @@ def townmenu_userinput():
 ## Outdoor menu ##
 def outdoor_menu():
     if player.locationH == ' ':
-        print('Day {}: You are in a {}.'.format(player.day, player.location))
+        print('Day {}: {}.'.format(player.day, player.location))
         print("[1] View Character")
         print("[2] View Map")
         print("[3] Move")
