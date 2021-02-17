@@ -86,6 +86,12 @@ def ratkingstats():
     print(stats)
     return stats
 
+# Generate Orbs randomly
+def generateOrbs(town_locations):
+    orbPossibleLocation = town_locations[1:-1]
+    orbLocation = random.choice(orbPossibleLocation)
+    return orbLocation
+
 # To display the world map
 def display_map():
     row = ''
@@ -125,6 +131,34 @@ def updatelocation():
                     player.locationH == 'K'
                 elif world_map[y][x] == ' ':
                     player.locationH == ' '
+
+# New Game
+def new_game():
+    player = Player()
+    rat = Rat()
+    rat_king = RatKing()
+
+    return player, rat, rat_king
+
+# Resume Game
+def resume_game():
+    input = open('save.pickle', 'rb')
+    world_map = pickle.load(input)
+    player = pickle.load(input)
+    rat = pickle.load(input)
+    rat_king = pickle.load(input)
+
+    return world_map, player, rat, rat_king
+
+# Save Game
+def save_game(world_map, player, rat, rat_king):
+    output = open('save.pickle', 'wb')
+    pickle.dump(world_map, output, -1)
+    pickle.dump(player, output, -1)
+    pickle.dump(rat, output, -1)
+    pickle.dump(rat_king, output, -1)
+    output.close()
+    print('Game is saved')
 
 # Exit the game
 def exit_game():
