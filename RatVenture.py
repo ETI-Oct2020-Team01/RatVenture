@@ -258,7 +258,7 @@ def mainmenu_userinput():
     while True:
         try:
             option = int(input('Enter your choice: '))
-            if option > 3 or option < 0:
+            if option > 3 or option < 1:
                 print('Invalid choice!')
                 continue
             else:
@@ -300,9 +300,9 @@ def townmenu_userinput():
         try:
             option = int(input('Enter your choice: '))
         # If user inputs something that is not a proper value, return error message
-            if option > 6 or option < 0:
+            if option > 6 or option < 1:
                 print('Invalid choice!')
-                return 'Invalid choice'
+                continue
             else:
             # Option 1: View Character
                 if option == 1:
@@ -359,7 +359,7 @@ def outdoormenu_userinput():
     while True: 
         try:
             option = int(input('Enter your choice: ')) #check for user input below
-            if option > 5 or option < 0:
+            if option > 5 or option < 1:
                 print('Invalid choice')
                 continue
             else:
@@ -421,7 +421,7 @@ def combatmenu_userinput():
     while True:
         try:
             option = int(input('Enter your choice: '))#check for user choice below
-            if option > 2 or option < 0:
+            if option > 2 or option < 1:
                 print('Invalid choice')
                 continue
             else:
@@ -505,7 +505,7 @@ def kingcombatmenu_userinput():
     while True:
         try:
             option = int(input('Enter your choice: '))#check for user choice below
-            if option > 2 or option < 0:
+            if option > 2 or option < 1:
                 print('Invalid choice')
                 continue
             else:
